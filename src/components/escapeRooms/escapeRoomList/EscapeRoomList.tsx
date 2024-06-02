@@ -59,9 +59,13 @@ const DisplayEscapeRooms: React.FC<SimpleEscapeRoomsProps> = ({
               item
               key={escapeRoom.id}
               xs={12}
-              sm={6}
-              md={4}
-              sx={{ display: 'flex' }}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
             >
               <EscapeRoomCard escapeRoom={escapeRoom} />
             </Grid>

@@ -4,9 +4,8 @@ import { EscapeRoomSimpleType } from '../../../../types/types';
 import StarIcon from '@mui/icons-material/Star';
 import PeopleIcon from '@mui/icons-material/People';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { Link } from 'react-router-dom';
-import { StarBorder } from '@mui/icons-material';
+import { CalendarMonth, LocalOffer, StarBorder } from '@mui/icons-material';
 
 interface EscapeRoomCardProps {
   escapeRoom: EscapeRoomSimpleType;
@@ -15,7 +14,12 @@ interface EscapeRoomCardProps {
 const calculateDifficultyLevel = (difficultyLevel: string) => {
   switch (difficultyLevel) {
     case 'BEGINNER':
-      return <StarIcon />;
+      return (
+        <>
+          <StarIcon /> <StarBorder />
+          <StarBorder /> <StarBorder /> <StarBorder />
+        </>
+      );
     case 'INTERMEDIATE':
       return (
         <>
@@ -27,7 +31,7 @@ const calculateDifficultyLevel = (difficultyLevel: string) => {
       return (
         <>
           <StarIcon /> <StarIcon />
-          <StarIcon />
+          <StarIcon /> <StarIcon /> <StarIcon />
         </>
       );
     default:
@@ -43,8 +47,8 @@ const EscapeRoomCard: React.FC<EscapeRoomCardProps> = ({ escapeRoom }) => {
     >
       <Card
         sx={{
-          margin: 0,
-          borderRadius: 2,
+          marginBottom: 2,
+          borderRadius: 5,
         }}
       >
         <CardMedia
@@ -53,14 +57,47 @@ const EscapeRoomCard: React.FC<EscapeRoomCardProps> = ({ escapeRoom }) => {
           alt={escapeRoom.name}
         />
         <CardContent>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              flexWrap: 'nowrap',
+              mb: 1,
+              gap: 1,
+            }}
+          >
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ display: 'flex', alignItems: 'center', color: '#fff' }}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                color: '#fff',
+              }}
             >
               Difficulty: {calculateDifficultyLevel(escapeRoom.difficultyLevel)}{' '}
             </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                color: '#fff',
+              }}
+            >
+              {escapeRoom.roomTheme.themeName}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              flexWrap: 'nowrap',
+              mb: 1,
+              gap: 1,
+            }}
+          >
             <Typography
               variant="body2"
               color="text.secondary"
@@ -82,9 +119,36 @@ const EscapeRoomCard: React.FC<EscapeRoomCardProps> = ({ escapeRoom }) => {
               color="text.secondary"
               sx={{ display: 'flex', alignItems: 'center', color: '#fff' }}
             >
-              <CalendarTodayIcon sx={{ mr: 0.5 }} /> 16+
+              <CalendarMonth sx={{ mr: 0.5 }} /> 16+
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                color: '#fff',
+              }}
+            >
+              <LocalOffer sx={{ mr: 0.5 }} />
+              {escapeRoom.basePrice} - {escapeRoom.basePrice + 200} zł
             </Typography>
           </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexWrap: 'nowrap',
+            }}
+          ></Box>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ display: 'flex', alignItems: 'center', color: '#fff' }}
+          >
+            Address: {escapeRoom.address.street}, {escapeRoom.address.city}{' '}
+            {escapeRoom.address.postalCode}
+          </Typography>
         </CardContent>
       </Card>
       <Typography
