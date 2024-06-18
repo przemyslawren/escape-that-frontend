@@ -1,13 +1,17 @@
 export interface EscapeRoomSimpleType {
   id: number;
   name: string;
-  description: string;
-  hasActor: boolean;
   difficultyLevel: string;
+  hasActor: boolean;
   address: AddressType;
   roomTheme: RoomThemeType;
   playerRange: PlayerRangeType;
   basePrice: number;
+}
+
+export interface EscapeRoomDetailsType extends EscapeRoomSimpleType {
+  description: string;
+  safetyRequirements: string[];
 }
 
 export interface AddressType {
@@ -24,4 +28,12 @@ export interface RoomThemeType {
 export interface PlayerRangeType {
   minPlayers: number;
   maxPlayers: number;
+}
+
+export interface CustomerBookingType {
+  id: number;
+  escapeRoom: EscapeRoomSimpleType;
+  bookingDate: string;
+  bookingTime: string;
+  customer: CustomerType;
 }

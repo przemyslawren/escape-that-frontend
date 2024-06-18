@@ -57,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ onDrawerToggle }) => {
             component={Link}
             to={BookingRoutes.BOOKING}
           >
-            Booking
+            Bookings
           </IconButton>
         </Box>
       </Toolbar>

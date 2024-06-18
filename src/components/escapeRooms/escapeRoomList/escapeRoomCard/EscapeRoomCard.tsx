@@ -4,8 +4,9 @@ import { EscapeRoomSimpleType } from '../../../../types/types';
 import StarIcon from '@mui/icons-material/Star';
 import PeopleIcon from '@mui/icons-material/People';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CalendarMonth, LocalOffer, StarBorder } from '@mui/icons-material';
+import { EscapeRoomsRoutes } from '../../../../routes/routes';
 
 interface EscapeRoomCardProps {
   escapeRoom: EscapeRoomSimpleType;
@@ -40,11 +41,16 @@ const calculateDifficultyLevel = (difficultyLevel: string) => {
 };
 
 const EscapeRoomCard: React.FC<EscapeRoomCardProps> = ({ escapeRoom }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(
+      EscapeRoomsRoutes.ESCAPE_ROOM.replace(':id', escapeRoom.id.toString())
+    );
+  };
+
   return (
-    <Link
-      to={`/escape-rooms/${escapeRoom.id}`}
-      style={{ textDecoration: 'none' }}
-    >
+    <Box onClick={handleCardClick} sx={{ cursor: 'pointer' }}>
       <Card
         sx={{
           marginBottom: 2,
@@ -131,7 +137,8 @@ const EscapeRoomCard: React.FC<EscapeRoomCardProps> = ({ escapeRoom }) => {
               }}
             >
               <LocalOffer sx={{ mr: 0.5 }} />
-              {escapeRoom.basePrice} - {escapeRoom.basePrice + 200} zł
+              {escapeRoom.basePrice * escapeRoom.playerRange.minPlayers} -{' '}
+              {escapeRoom.basePrice * escapeRoom.playerRange.maxPlayers} zł
             </Typography>
           </Box>
           <Box
@@ -159,7 +166,7 @@ const EscapeRoomCard: React.FC<EscapeRoomCardProps> = ({ escapeRoom }) => {
       >
         {escapeRoom.name}
       </Typography>
-    </Link>
+    </Box>
   );
 };
 
