@@ -3,6 +3,7 @@ export enum AppRoutes {
   ESCAPE_ROOMS = '/escape-rooms',
   ESCAPE_ROOMS_ROUTES = '/escape-rooms/*',
   ERROR_PAGE = '/error',
+  LOGIN = '/login',
 }
 
 export enum EscapeRoomsRoutes {
@@ -13,4 +14,9 @@ export enum BookingRoutes {
   BOOKING = '/booking',
   ADD_BOOKING = '/booking/add',
   EDIT_BOOKING = '/booking/edit/:id',
+}
+
+export enum CustomerRoutes {
+  CUSTOMER = '/customers',
+  CUSTOMER_BOOKINGS = '/escape-rooms/:id', //for now
 }

@@ -30,10 +30,10 @@ export interface PlayerRangeType {
   maxPlayers: number;
 }
 
-export interface CustomerBookingType {
+export interface BookingType {
   id: number;
+  bookingStatus: string;
   escapeRoom: EscapeRoomSimpleType;
-  bookingDate: string;
-  bookingTime: string;
-  customer: CustomerType;
+  bookingStartDate: string;
+  slotNumber: number;
 }

@@ -55,14 +55,14 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#5c0a0a', // Ciemny kolor nagłówka
+          backgroundColor: '#5c0a0a', // Ciemny bordowy kolor nagłówka
         },
       },
     },
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#01090b', // Ciemnoszary kolor dla paska bocznego
+          backgroundColor: '#5c0a0a', // Ciemny bordowy kolor dla paska bocznego
         },
       },
     },

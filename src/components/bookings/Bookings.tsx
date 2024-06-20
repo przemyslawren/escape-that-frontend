@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { BookingType } from '../../types/types';
-
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import React from 'react';
 
 const Bookings: React.FC = () => {
-const [bookings, setBookings] = useState<BookingType[]>([]);
-const [error, setError] = useState<string | null>(null);
-
   return (
     <>
-      <h1>Bookings</h1>
+      <Box>
+        <h1>Bookings</h1>
+        <Button>Add new Booking</Button>
+      </Box>
     </>
   );
 };

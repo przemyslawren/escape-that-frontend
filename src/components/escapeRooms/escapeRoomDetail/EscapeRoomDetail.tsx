@@ -4,7 +4,6 @@ import { fetchEscapeRoomDetails } from '../../../api/api';
 import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 
 interface EscapeRoomDetailsProps {
   escapeRoomDetails: EscapeRoomDetailsType;
@@ -39,11 +38,26 @@ const EscapeRoomDetail: React.FC = () => {
       {escapeRoomDetails && (
         <Box>
           <Typography variant="h4">{escapeRoomDetails.name}</Typography>
-          <Typography variant="body1">{escapeRoomDetails.description}</Typography>
           <Typography variant="body1">
+            {escapeRoomDetails.description}
           </Typography>
+          <Typography variant="body1"></Typography>
           <Typography variant="body1">
             Difficulty: {escapeRoomDetails.difficultyLevel}
+          </Typography>
+          <Typography variant="body1">
+            Theme: {escapeRoomDetails.roomTheme.themeName}
+          </Typography>
+          <Typography variant="body1">
+            Theme description: {escapeRoomDetails.roomTheme.description}
+          </Typography>
+          <Typography variant="body1">
+            Address: {escapeRoomDetails.address.city},{' '}
+            {escapeRoomDetails.address.street},{' '}
+            {escapeRoomDetails.address.postalCode}
+          </Typography>
+          <Typography variant="body1">
+            Safety requirements: {escapeRoomDetails.safetyRequirements}
           </Typography>
           <Typography variant="body1">
             Minimum players: {escapeRoomDetails.playerRange.minPlayers}
@@ -54,7 +68,6 @@ const EscapeRoomDetail: React.FC = () => {
           <Typography variant="body1">
             Price: {escapeRoomDetails.basePrice} zł
           </Typography>
-          <Button variant="contained" >Book room</Button>
         </Box>
       )}
     </div>
