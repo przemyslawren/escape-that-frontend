@@ -25,7 +25,7 @@ export const login = createAsyncThunk(
       const response = await axiosInstance.post('/auth/login', loginRequest);
       return response.data;
     } catch (error) {
-      return rejectWithValue((error as Error).message);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -39,6 +39,18 @@ const authSlice = createSlice({
       state.user = null;
       state.role = null;
       state.error = null;
+    },
+    authSuccess(state, action) {
+      state.isAuthenticated = true;
+      state.user = action.payload.user;
+      state.role = action.payload.role;
+      state.error = null;
+    },
+    authFail(state, action) {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.role = null;
+      state.error = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -57,6 +69,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, authSuccess, authFail } = authSlice.actions;
 
 export default authSlice.reducer;

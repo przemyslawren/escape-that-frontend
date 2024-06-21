@@ -16,7 +16,7 @@ import { useAuth } from './hooks/useAuth';
 
 const App = (): JSX.Element => {
   const { isAuthenticated, role } = useAuth();
-  
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
@@ -32,7 +32,7 @@ const App = (): JSX.Element => {
             <Route
               path={BookingRoutes.BOOKING}
               element={
-                isAuthenticated ? (
+                isAuthenticated && role === 'ROLE_CUSTOMER' ? (
                   <Bookings />
                 ) : (
                   <Navigate to={AppRoutes.LOGIN} />
