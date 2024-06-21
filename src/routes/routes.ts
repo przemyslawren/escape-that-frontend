@@ -18,5 +18,5 @@ export enum BookingRoutes {
 
 export enum CustomerRoutes {
   CUSTOMER = '/customers',
-  CUSTOMER_BOOKINGS = '/escape-rooms/:id', //for now
+  CUSTOMER_BOOKINGS = '/customers/bookings',
 }

@@ -32,7 +32,7 @@ const App = (): JSX.Element => {
             <Route
               path={BookingRoutes.BOOKING}
               element={
-                isAuthenticated && role === 'ROLE_CUSTOMER' ? (
+                isAuthenticated ? (
                   <Bookings />
                 ) : (
                   <Navigate to={AppRoutes.LOGIN} />

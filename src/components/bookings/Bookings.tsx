@@ -1,20 +1,22 @@
+// src/components/bookings/Bookings.tsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Box, Button } from '@mui/material';
+import { fetchUserBookings } from '../../api/api';
+import { BookingType } from '../../types/types';
 
 const Bookings: React.FC = () => {
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState<BookingType[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get('/customers/bookings');
-        setBookings(response.data);
-      } catch (error) {
-        console.error('Error fetching bookings:', error);
+        const fetchedBookings = await fetchUserBookings();
+        setBookings(fetchedBookings);
+      } catch (err) {
+        setError('Failed to fetch bookings.');
       }
     };
-
     fetchBookings();
   }, []);
 
@@ -22,14 +24,14 @@ const Bookings: React.FC = () => {
     <>
       <Box>
         <h1>Bookings</h1>
+        {error && <p>{error}</p>}
+        {/* {bookings.map((booking) => (
+          <div key={booking.id}>
+            <p>{booking.escapeRoom.name}</p>
+            <p>{booking.bookingStartDate}</p>
+          </div>
+        ))} */}
         <Button>Add new Booking</Button>
-        <ul>
-          {bookings.map((booking: any) => (
-            <li
-              key={booking.id}
-            >{`Booking ID: ${booking.id}, Status: ${booking.status}`}</li>
-          ))}
-        </ul>
       </Box>
     </>
   );
