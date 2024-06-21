@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import { AppRoutes, BookingRoutes, EscapeRoomsRoutes } from './routes/routes';
 import Home from './components/home/Home';
 import EscapeRooms from './components/escapeRooms/EscapeRooms';
@@ -11,20 +11,34 @@ import EscapeRoomDetail from './components/escapeRooms/escapeRoomDetail/EscapeRo
 import Layout from './components/layout/Layout';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
+import { useAuth } from './hooks/useAuth';
+import Login from './components/layout/login/Login';
 
 const App = (): JSX.Element => {
+  const { isAuthenticated, role } = useAuth();
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path={AppRoutes.HOME} element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path={AppRoutes.LOGIN} element={<Login />} />
             <Route path={AppRoutes.ESCAPE_ROOMS} element={<EscapeRooms />} />
             <Route
               path={EscapeRoomsRoutes.ESCAPE_ROOM}
               element={<EscapeRoomDetail />}
             />
-            <Route path={BookingRoutes.BOOKING} element={<Bookings />}>
+            <Route
+              path={BookingRoutes.BOOKING}
+              element={
+                isAuthenticated && role === 'CUSTOMER' ? (
+                  <Bookings />
+                ) : (
+                  <Navigate to={AppRoutes.LOGIN} />
+                )
+              }
+            >
               <Route
                 path={BookingRoutes.ADD_BOOKING}
                 element={<AddBooking />}
