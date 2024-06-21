@@ -4,6 +4,7 @@ import { fetchEscapeRoomDetails } from '../../../api/api';
 import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { Button, Divider } from '@mui/material';
 
 interface EscapeRoomDetailsProps {
   escapeRoomDetails: EscapeRoomDetailsType;
@@ -68,6 +69,8 @@ const EscapeRoomDetail: React.FC = () => {
           <Typography variant="body1">
             Price: {escapeRoomDetails.basePrice} zł
           </Typography>
+          <Divider sx={{ margin: 2 }} />
+          <Button>Book the room</Button>
         </Box>
       )}
     </div>

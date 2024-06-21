@@ -32,8 +32,9 @@ export interface PlayerRangeType {
 
 export interface BookingType {
   id: number;
-  bookingStatus: string;
-  escapeRoom: EscapeRoomSimpleType;
-  bookingStartDate: string;
+  promoCode: boolean;
   slotNumber: number;
+  startTime: string;
+  status: string;
+  escapeRoomSimpleDto: EscapeRoomSimpleType;
 }
