@@ -1,42 +1,78 @@
-import { API_BASE_URL } from '../config/axios';
+import axiosInstance from '../config/axios';
 import { AppRoutes, CustomerRoutes } from '../routes/routes';
 import {
   BookingType,
   EscapeRoomDetailsType,
   EscapeRoomSimpleType,
 } from '../types/types';
+import { AxiosError } from 'axios';
 
 export const fetchSimpleEscapeRooms = async (): Promise<
   EscapeRoomSimpleType[]
 > => {
-  const response = await fetch(`${API_BASE_URL}${AppRoutes.ESCAPE_ROOMS}`);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch escape rooms: ${response.status}`);
+  try {
+    const response = await axiosInstance.get<EscapeRoomSimpleType[]>(
+      AppRoutes.ESCAPE_ROOMS
+    );
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    throw new Error(
+      `Failed to fetch escape rooms: ${
+        axiosError.response?.status || axiosError.message
+      }`
+    );
   }
-  const simpleEscapeRooms: EscapeRoomSimpleType[] = await response.json();
-  return simpleEscapeRooms;
 };
 
 export const fetchEscapeRoomDetails = async (
   id: string
 ): Promise<EscapeRoomDetailsType> => {
-  const response = await fetch(
-    `${API_BASE_URL}${AppRoutes.ESCAPE_ROOMS}/${id}`
-  );
-  if (!response.ok) {
-    throw new Error(`Failed to fetch escape room detail: ${response.status}`);
+  try {
+    const response = await axiosInstance.get<EscapeRoomDetailsType>(
+      `${AppRoutes.ESCAPE_ROOMS}/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    throw new Error(
+      `Failed to fetch escape room detail: ${
+        axiosError.response?.status || axiosError.message
+      }`
+    );
   }
-  const escapeRoomDetails: EscapeRoomDetailsType = await response.json();
-  return escapeRoomDetails;
 };
 
 export const fetchUserBookings = async (id: string): Promise<BookingType[]> => {
-  const response = await fetch(
-    `${API_BASE_URL}${CustomerRoutes.CUSTOMER_BOOKINGS}/${id}`
-  );
-  if (!response.ok) {
-    throw new Error(`Failed to fetch user bookings: ${response.status}`);
+  try {
+    const response = await axiosInstance.get<BookingType[]>(
+      `${CustomerRoutes.CUSTOMER_BOOKINGS}/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    throw new Error(
+      `Failed to fetch user bookings: ${
+        axiosError.response?.status || axiosError.message
+      }`
+    );
   }
-  const userBookings: BookingType[] = await response.json();
-  return userBookings;
+};
+
+export const loginUser = async (
+  email: string,
+  password: string
+): Promise<any> => {
+  try {
+    const response = await axiosInstance.post('/auth/login', {
+      email,
+      password,
+    });
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    throw new Error(
+      `Login failed: ${axiosError.response?.status || axiosError.message}`
+    );
+  }
 };

@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Button } from '@mui/material';
-import { BookingType } from '../../types'; // ensure you have this type defined
 
 const Bookings: React.FC = () => {
-  const [bookings, setBookings] = useState<BookingType[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get('/api/customers/bookings');
-        if (Array.isArray(response.data)) {
-          setBookings(response.data);
-        } else {
-          setError('Unexpected response format');
-        }
-      } catch (err) {
-        setError('Failed to fetch bookings');
+        const response = await axios.get('/customers/bookings');
+        setBookings(response.data);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
       }
     };
 
@@ -25,18 +19,19 @@ const Bookings: React.FC = () => {
   }, []);
 
   return (
-    <Box>
-      <h1>Bookings</h1>
-      {error && <p>{error}</p>}
-      <Button>Add new Booking</Button>
-      <ul>
-        {bookings.map((booking) => (
-          <li key={booking.id}>
-            {booking.escapeRoom.name} - {booking.startTime}
-          </li>
-        ))}
-      </ul>
-    </Box>
+    <>
+      <Box>
+        <h1>Bookings</h1>
+        <Button>Add new Booking</Button>
+        <ul>
+          {bookings.map((booking: any) => (
+            <li
+              key={booking.id}
+            >{`Booking ID: ${booking.id}, Status: ${booking.status}`}</li>
+          ))}
+        </ul>
+      </Box>
+    </>
   );
 };
 

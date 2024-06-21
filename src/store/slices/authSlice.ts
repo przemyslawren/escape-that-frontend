@@ -1,11 +1,10 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { loginUser } from '../../api/api';
 
 interface AuthState {
   isAuthenticated: boolean;
   user: any;
   role: string | null;
-  loading: boolean;
   error: string | null;
 }
 
@@ -13,24 +12,23 @@ const initialState: AuthState = {
   isAuthenticated: false,
   user: null,
   role: null,
-  loading: false,
   error: null,
 };
 
 export const login = createAsyncThunk(
   'auth/login',
   async (
-    loginRequestDto: { email: string; password: string },
+    loginRequest: { email: string; password: string },
     { rejectWithValue }
   ) => {
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/login',
-        loginRequestDto
+      const response = await loginUser(
+        loginRequest.email,
+        loginRequest.password
       );
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response.data.message || 'Login failed');
+      return response;
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
     }
   }
 );
@@ -39,50 +37,29 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    authSuccess: (state, action: PayloadAction<any>) => {
-      state.isAuthenticated = true;
-      state.user = action.payload.user;
-      state.role = action.payload.role;
-      state.loading = false;
-      state.error = null;
-    },
-    authFail: (state, action: PayloadAction<string>) => {
+    logout(state) {
       state.isAuthenticated = false;
       state.user = null;
       state.role = null;
-      state.loading = false;
-      state.error = action.payload;
-    },
-    logout: (state) => {
-      state.isAuthenticated = false;
-      state.user = null;
-      state.role = null;
-      state.loading = false;
       state.error = null;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    });
-    builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
+    builder.addCase(login.fulfilled, (state, action) => {
       state.isAuthenticated = true;
       state.user = action.payload.user;
       state.role = action.payload.role;
-      state.loading = false;
       state.error = null;
     });
-    builder.addCase(login.rejected, (state, action: PayloadAction<any>) => {
+    builder.addCase(login.rejected, (state, action) => {
       state.isAuthenticated = false;
       state.user = null;
       state.role = null;
-      state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload as string;
     });
   },
 });
 
-export const { authSuccess, authFail, logout } = authSlice.actions;
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;
