@@ -38,16 +38,27 @@ const App = (): JSX.Element => {
                   <Navigate to={AppRoutes.LOGIN} />
                 )
               }
-            >
-              <Route
-                path={BookingRoutes.ADD_BOOKING}
-                element={<AddBooking />}
-              />
-              <Route
-                path={BookingRoutes.EDIT_BOOKING}
-                element={<EditBooking />}
-              />
-            </Route>
+            ></Route>
+            <Route
+              path={BookingRoutes.ADD_BOOKING}
+              element={
+                isAuthenticated ? (
+                  <AddBooking />
+                ) : (
+                  <Navigate to={AppRoutes.LOGIN} />
+                )
+              }
+            />
+            <Route
+              path={BookingRoutes.EDIT_BOOKING}
+              element={
+                isAuthenticated ? (
+                  <EditBooking />
+                ) : (
+                  <Navigate to={AppRoutes.LOGIN} />
+                )
+              }
+            />
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>

@@ -1,6 +1,7 @@
 import axiosInstance from '../config/axios';
 import { AppRoutes, CustomerRoutes } from '../routes/routes';
 import {
+  BookingRequestDto,
   BookingType,
   EscapeRoomDetailsType,
   EscapeRoomSimpleType,
@@ -75,4 +76,14 @@ export const loginUser = async (
       `Login failed: ${axiosError.response?.status || axiosError.message}`
     );
   }
+};
+
+export const createBooking = async (
+  escapeRoomId: number,
+  bookingRequest: BookingRequestDto
+): Promise<void> => {
+  await axiosInstance.post(
+    `/escape-rooms/${escapeRoomId}/create-booking`,
+    bookingRequest
+  );
 };

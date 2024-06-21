@@ -1,9 +1,8 @@
 export enum AppRoutes {
   HOME = '/',
-  ESCAPE_ROOMS = '/escape-rooms',
-  ESCAPE_ROOMS_ROUTES = '/escape-rooms/*',
   ERROR_PAGE = '/error',
   LOGIN = '/login',
+  ESCAPE_ROOMS = '/escape-rooms',
 }
 
 export enum EscapeRoomsRoutes {
@@ -12,8 +11,8 @@ export enum EscapeRoomsRoutes {
 
 export enum BookingRoutes {
   BOOKING = '/booking',
-  ADD_BOOKING = '/booking/add',
-  EDIT_BOOKING = '/booking/edit/:id',
+  ADD_BOOKING = '/booking/add/:escapeRoomId',
+  EDIT_BOOKING = '/booking/edit/:bookingId',
 }
 
 export enum CustomerRoutes {

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Divider, List, ListItem, ListItemText } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+} from '@mui/material';
 import { fetchUserBookings } from '../../api/api';
 import { BookingType } from '../../types/types';
 import EscapeRoomList from '../escapeRooms/escapeRoomList/EscapeRoomList';
@@ -28,24 +35,29 @@ const Bookings: React.FC = () => {
   return (
     <>
       <Box>
-        <h1>Bookings</h1>
+        {bookings.length === 0 && <p>No bookings found.</p>}
+        {showEscapeRoomList == false && <h1>Bookings</h1>}
         {error && <p>{error}</p>}
-        <List>
-          {bookings.map((booking) => (
-            <ListItem key={booking.id}>
-              <ListItemText
-                primary={booking.escapeRoomSimpleDto.name}
-                secondary={`Slot: ${booking.slotNumber}, Start Time: ${booking.startTime}, Status: ${booking.status}`}
-              />
-            </ListItem>
-          ))}
-        </List>
-        <Button onClick={handleAddBooking}>Add new Booking</Button>
+        {showEscapeRoomList == false && (
+          <List>
+            {bookings.map((booking) => (
+              <ListItem key={booking.id}>
+                <ListItemText
+                  primary={booking.escapeRoomSimpleDto.name}
+                  secondary={`Slot: ${booking.slotNumber}, Start Time: ${booking.startTime}, Status: ${booking.status}`}
+                />
+              </ListItem>
+            ))}
+          </List>
+        )}
       </Box>
-      <Divider sx={{ margin: 2}} />
-      <Box>
-      {showEscapeRoomList && <EscapeRoomList />}
-      </Box>
+      {showEscapeRoomList == false && (
+        <>
+          <Button onClick={handleAddBooking}>Add new Booking</Button>
+          <Divider sx={{ margin: 2 }} />
+        </>
+      )}
+      <Box>{showEscapeRoomList && <EscapeRoomList />}</Box>
     </>
   );
 };

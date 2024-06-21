@@ -38,3 +38,7 @@ export interface BookingType {
   status: string;
   escapeRoomSimpleDto: EscapeRoomSimpleType;
 }
+
+export interface BookingRequestDto {
+  
+}

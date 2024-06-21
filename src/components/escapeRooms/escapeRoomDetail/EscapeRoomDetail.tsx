@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { EscapeRoomDetailsType } from '../../../types/types';
 import { fetchEscapeRoomDetails } from '../../../api/api';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Button, Divider } from '@mui/material';
+import { AppRoutes } from '../../../routes/routes';
+import { useAuth } from '../../../hooks/useAuth';
 
 interface EscapeRoomDetailsProps {
   escapeRoomDetails: EscapeRoomDetailsType;
@@ -15,6 +17,8 @@ const EscapeRoomDetail: React.FC = () => {
   const [escapeRoomDetails, setEscapeRoomDetails] =
     useState<EscapeRoomDetailsType | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +32,14 @@ const EscapeRoomDetail: React.FC = () => {
     };
     fetchData();
   }, [id]);
+
+  const handleBooking = () => {
+    if (isAuthenticated) {
+      navigate(`/booking/add/${id}`);
+    } else {
+      navigate(AppRoutes.LOGIN);
+    }
+  };
 
   if (error) {
     return <div>{error}</div>;
@@ -70,7 +82,7 @@ const EscapeRoomDetail: React.FC = () => {
             Price: {escapeRoomDetails.basePrice} zł
           </Typography>
           <Divider sx={{ margin: 2 }} />
-          <Button>Book the room</Button>
+          <Button onClick={handleBooking}>Book the room</Button>
         </Box>
       )}
     </div>
