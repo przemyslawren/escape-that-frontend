@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { loginUser } from '../../api/api';
+import axiosInstance from '../../config/axios';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -22,11 +22,8 @@ export const login = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await loginUser(
-        loginRequest.email,
-        loginRequest.password
-      );
-      return response;
+      const response = await axiosInstance.post('/auth/login', loginRequest);
+      return response.data;
     } catch (error) {
       return rejectWithValue((error as Error).message);
     }

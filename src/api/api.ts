@@ -43,10 +43,10 @@ export const fetchEscapeRoomDetails = async (
   }
 };
 
-export const fetchUserBookings = async (id: string): Promise<BookingType[]> => {
+export const fetchUserBookings = async (): Promise<BookingType[]> => {
   try {
     const response = await axiosInstance.get<BookingType[]>(
-      `${CustomerRoutes.CUSTOMER_BOOKINGS}/${id}`
+      CustomerRoutes.CUSTOMER_BOOKINGS
     );
     return response.data;
   } catch (error) {

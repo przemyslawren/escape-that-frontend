@@ -16,7 +16,7 @@ import { useAuth } from './hooks/useAuth';
 
 const App = (): JSX.Element => {
   const { isAuthenticated, role } = useAuth();
-
+  
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
