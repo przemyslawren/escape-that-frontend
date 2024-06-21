@@ -11,8 +11,8 @@ import EscapeRoomDetail from './components/escapeRooms/escapeRoomDetail/EscapeRo
 import Layout from './components/layout/Layout';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
-import { useAuth } from './hooks/useAuth';
 import Login from './components/layout/login/Login';
+import { useAuth } from './hooks/useAuth';
 
 const App = (): JSX.Element => {
   const { isAuthenticated, role } = useAuth();

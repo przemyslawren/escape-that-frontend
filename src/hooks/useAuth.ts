@@ -1,25 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store';
+import { useEffect } from 'react';
 import axios from 'axios';
+import { authFail, authSuccess } from '../store/slices/authSlice';
 
 export const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState<string | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  const { isAuthenticated, role } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get('/api/check-auth');
+        const response = await axios.get('/api/check-auth', {
+          withCredentials: true,
+        });
         if (response.status === 200) {
-          setIsAuthenticated(true);
-          setRole(response.data.role);
+          dispatch(authSuccess(response.data));
         }
       } catch {
-        setIsAuthenticated(false);
-        setRole(null);
+        dispatch(authFail(''));
       }
     };
     checkAuth();
-  }, []);
+  }, [dispatch]);
 
   return { isAuthenticated, role };
 };

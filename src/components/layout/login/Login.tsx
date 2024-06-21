@@ -1,28 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../../store/slices/authSlice';
+import { AppDispatch, RootState } from '../../../store';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const authState = useSelector((state: RootState) => state.auth);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/login',
-        {
-          email,
-          password,
-        }
-      );
-      if (response.status === 200) {
+      const result = await dispatch(login({ email, password })).unwrap();
+      if (result) {
         navigate('/');
       }
-    } catch (err) {
-      setError('Invalid credentials');
+    } catch (err: any) {
+      setError(authState.error || 'Invalid credentials');
     }
   };
 
