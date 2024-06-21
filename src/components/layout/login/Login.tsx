@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../../store/slices/authSlice';
 import { AppDispatch, RootState } from '../../../store';
+import './Login.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -23,23 +24,25 @@ const Login: React.FC = () => {
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <div className="container">
+          <div>
+            <label>Email: </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Password: </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
         </div>
         <button type="submit">Login</button>
         {error && <p>{error}</p>}

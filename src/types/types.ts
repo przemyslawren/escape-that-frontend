@@ -40,5 +40,10 @@ export interface BookingType {
 }
 
 export interface BookingRequestDto {
-  
+  status: string;
+  customerId: number;
+  escapeRoomId: number;
+  startTime: Date;
+  slotNumber: number;
+  promoCode: boolean;
 }

@@ -11,6 +11,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useAuth } from '../../../hooks/useAuth';
 import { createBooking } from '../../../api/api';
+import { BookingRequestDto } from '../../../types/types';
+import { AppRoutes } from '../../../routes/routes';
 
 const TIME_SLOTS = [
   '09:00',
@@ -44,9 +46,9 @@ const AddBooking: React.FC = () => {
   };
 
   const handleBooking = async () => {
-    console.log('user.id', user.id);
-    if (selectedDate && selectedTime && escapeRoomId && user) {
-      const bookingRequest = {
+    console.log('Booking Request:', selectedDate, selectedTime, escapeRoomId, user)
+    if (selectedDate && selectedTime && escapeRoomId && user.id) {
+      const bookingRequest: BookingRequestDto = {
         status: 'PENDING', // or the appropriate status
         customerId: user.id,
         escapeRoomId: Number(escapeRoomId),
@@ -59,7 +61,7 @@ const AddBooking: React.FC = () => {
 
       try {
         await createBooking(Number(escapeRoomId), bookingRequest);
-        navigate('/bookings');
+        navigate(AppRoutes.HOME);
       } catch (error) {
         console.error('Error creating booking:', error);
       }
