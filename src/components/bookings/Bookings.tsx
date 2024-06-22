@@ -15,7 +15,7 @@ const Bookings: React.FC = () => {
   const [bookings, setBookings] = useState<BookingType[]>([]);
   const [showEscapeRoomList, setShowEscapeRoomList] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
+  
   useEffect(() => {
     const fetchBookings = async () => {
       try {
@@ -25,8 +25,9 @@ const Bookings: React.FC = () => {
         setError('Failed to fetch bookings.');
       }
     };
+    console.log('Bookings:', bookings);
     fetchBookings();
-  }, []);
+  }, [bookings]);
 
   const handleAddBooking = () => {
     setShowEscapeRoomList(true);

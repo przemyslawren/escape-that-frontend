@@ -47,7 +47,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload.user;
       state.role = action.payload.role;
-      state.id = action.payload.id;
+      state.id = action.payload.customerId;
       state.error = null;
     },
     authFail(state, action) {
@@ -63,7 +63,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload.user;
       state.role = action.payload.role;
-      state.id = action.payload.id;
+      state.id = action.payload.customerId;
       state.error = null;
     });
     builder.addCase(login.rejected, (state, action) => {

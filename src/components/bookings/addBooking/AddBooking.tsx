@@ -49,14 +49,14 @@ const AddBooking: React.FC = () => {
     console.log('Booking Request:', selectedDate, selectedTime, escapeRoomId, user)
     if (selectedDate && selectedTime && escapeRoomId && user.id) {
       const bookingRequest: BookingRequestDto = {
-        status: 'PENDING', // or the appropriate status
+        status: 'PENDING',
         customerId: user.id,
         escapeRoomId: Number(escapeRoomId),
         startTime: new Date(
           `${selectedDate.toISOString().split('T')[0]}T${selectedTime}`
         ),
         slotNumber: TIME_SLOTS.indexOf(selectedTime) + 1,
-        promoCode: false, // or true if you have a promo code logic
+        promoCode: false,
       };
 
       try {
