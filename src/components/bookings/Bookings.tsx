@@ -10,24 +10,25 @@ import {
 import { fetchUserBookings } from '../../api/api';
 import { BookingType } from '../../types/types';
 import EscapeRoomList from '../escapeRooms/escapeRoomList/EscapeRoomList';
+import { useAuth } from '../../hooks/useAuth';
 
 const Bookings: React.FC = () => {
+  const { user } = useAuth();
   const [bookings, setBookings] = useState<BookingType[]>([]);
   const [showEscapeRoomList, setShowEscapeRoomList] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const fetchedBookings = await fetchUserBookings();
+        const fetchedBookings = await fetchUserBookings(user.id);
         setBookings(fetchedBookings);
       } catch (err) {
         setError('Failed to fetch bookings.');
       }
     };
-    console.log('Bookings:', bookings);
     fetchBookings();
-  }, [bookings]);
+  });
 
   const handleAddBooking = () => {
     setShowEscapeRoomList(true);
